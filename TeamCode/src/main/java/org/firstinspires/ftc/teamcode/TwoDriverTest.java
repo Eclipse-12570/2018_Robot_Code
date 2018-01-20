@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
@@ -13,7 +14,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 public class TwoDriverTest {
     @TeleOp(name="Pushbot: TwoDriver Tank", group="Pushbot")
 //@Disabled
-    public class PushbotTeleopTank_Iterative extends OpMode {
+    public class PushbotTeleopTank_Iterative extends LinearOpMode {
 
         /* Declare OpMode members. */
         HardwarePushbot robot       = new HardwarePushbot(); // use the class created to define a Pushbot's hardware
