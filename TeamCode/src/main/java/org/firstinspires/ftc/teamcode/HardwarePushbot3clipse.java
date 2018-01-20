@@ -27,12 +27,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 /**
  * This is NOT an opmode.
@@ -50,7 +51,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Servo channel:  Servo to open left claw:  "left_hand"
  * Servo channel:  Servo to open right claw: "right_hand"
  */
-public class HardwarePushbot
+public class HardwarePushbot3clipse
 {
     /* Public OpMode members. */
     public DcMotor  leftDrive   = null;
@@ -58,7 +59,7 @@ public class HardwarePushbot
     public DcMotor  leftArm     = null;
     public Servo    leftClaw    = null;
     public Servo    rightClaw   = null;
-    public Servo    colorArm    = null;
+    public ColorSensor  color   = null;
 
     public static final double MID_SERVO       =  0.5 ;
     public static final double ARM_UP_POWER    =  0.45 ;
@@ -69,7 +70,7 @@ public class HardwarePushbot
     private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
-    public HardwarePushbot(){
+    public HardwarePushbot3clipse(){
 
     }
 
@@ -101,9 +102,6 @@ public class HardwarePushbot
         rightClaw = hwMap.get(Servo.class, "right_hand");
         leftClaw.setPosition(MID_SERVO);
         rightClaw.setPosition(MID_SERVO);
-
-        colorArm = hwMap.get(Servo.class, "color_arm");
-        colorArm.setPosition(MID_SERVO);
     }
  }
 

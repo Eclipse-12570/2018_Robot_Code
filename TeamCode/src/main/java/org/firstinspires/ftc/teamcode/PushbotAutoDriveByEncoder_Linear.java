@@ -27,13 +27,16 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 /**
  * This file illustrates the concept of driving a path based on encoder counts.
@@ -62,7 +65,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Pushbot: Auto Drive By Encoder", group="Pushbot")
+@Autonomous(name="Auto Test", group="Pushbot")
 //@Disabled
 public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
 
@@ -78,6 +81,9 @@ public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
     static final double     DRIVE_SPEED             = 0.6;
     static final double     TURN_SPEED              = 0.5;
 
+    ColorSensor sensorColor;
+    DistanceSensor sensorDistance;
+
     @Override
     public void runOpMode() {
 
@@ -86,6 +92,14 @@ public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
+
+        // get a reference to the color sensor.
+        sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color_distance");
+
+        // get a reference to the distance sensor that shares the same name.
+        sensorDistance = hardwareMap.get(DistanceSensor.class, "sensor_color_distance");
+
+
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Resetting Encoders");    //
@@ -105,19 +119,38 @@ public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
+        robot.colorArm.setPosition(1.0);
+        sleep(500);
+        //red
+        if (sensorColor.red() > sensorColor.blue()) {
+            // Step through each leg of the path,
+            // Note: Reverse movement is obtained by setting a negative distance (not speed)
+            encoderDrive(DRIVE_SPEED, 0, 0, .5);  // S1: Forward 47 Inches with 5 Sec timeout
+            encoderDrive(TURN_SPEED, -5, 5, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+            encoderDrive(DRIVE_SPEED, 0, 0, .5);  // S3: Reverse 24 Inches with 4 Sec timeout
 
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  48,  48, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-        encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
+            robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
+            robot.rightClaw.setPosition(0.0);
+            sleep(1000);     // pause for servos to move
 
-        robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
-        robot.rightClaw.setPosition(0.0);
-        sleep(1000);     // pause for servos to move
+            telemetry.addData("Path", "Complete");
+            telemetry.update();
+        }
+        //blue
+        else {
+            // Step through each leg of the path,
+            // Note: Reverse movement is obtained by setting a negative distance (not speed)
+            encoderDrive(DRIVE_SPEED, 0, 0, .5);  // S1: Forward 47 Inches with 5 Sec timeout
+            encoderDrive(TURN_SPEED, 5, -5, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+            encoderDrive(DRIVE_SPEED, 0, 0, .5);  // S3: Reverse 24 Inches with 4 Sec timeout
 
-        telemetry.addData("Path", "Complete");
-        telemetry.update();
+            robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
+            robot.rightClaw.setPosition(0.0);
+            sleep(1000);     // pause for servos to move
+
+            telemetry.addData("Path", "Complete");
+            telemetry.update();
+        }
     }
 
     /*
