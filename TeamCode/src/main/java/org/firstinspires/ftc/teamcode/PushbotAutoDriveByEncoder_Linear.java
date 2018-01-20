@@ -67,7 +67,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 @Autonomous(name="Auto Test", group="Pushbot")
 //@Disabled
-public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
+public class PushbotRedknock extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwarePushbot         robot   = new HardwarePushbot();   // Use a Pushbot's hardware

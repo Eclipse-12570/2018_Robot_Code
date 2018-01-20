@@ -118,12 +118,9 @@ public class TwoDriverTank extends OpMode{
         robot.rightClaw.setPosition(robot.MID_SERVO - clawOffset);
 
         // Use gamepad buttons to move the arm up (Y) and down (A)
-        if (gamepad2.left_stick_y)
-            robot.leftArm.setPower(robot.ARM_UP_POWER);
-        else if (-gamepad2.left_stick_y)
-            robot.leftArm.setPower(robot.ARM_DOWN_POWER);
-        else
-            robot.leftArm.setPower(0.0);
+
+            robot.leftArm.setPower(robot.ARM_UP_POWER * gamepad2.left_stick_y);kj
+
 
         // Send telemetry message to signify robot running;
         telemetry.addData("claw",  "Offset = %.2f", clawOffset);
