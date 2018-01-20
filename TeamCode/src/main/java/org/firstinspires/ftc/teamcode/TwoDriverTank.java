@@ -119,7 +119,7 @@ public class TwoDriverTank extends OpMode{
 
         // Use gamepad buttons to move the arm up (Y) and down (A)
 
-            robot.leftArm.setPower(robot.ARM_UP_POWER * gamepad2.left_stick_y);kj
+            robot.leftArm.setPower(robot.ARM_UP_POWER * gamepad2.left_stick_y);
 
 
         // Send telemetry message to signify robot running;

@@ -52,7 +52,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
  */
 
 @TeleOp(name="Pushbot: Teleop Tank2", group="Pushbot")
-// @Disabled
+@Disabled
 public class PushbotTeleopTank_Iterative extends OpMode{
 
     /* Declare OpMode members. */
