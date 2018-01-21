@@ -20,8 +20,10 @@ public class TwoDriverTest {
         HardwarePushbot robot       = new HardwarePushbot(); // use the class created to define a Pushbot's hardware
         // could also use HardwarePushbotMatrix class.
         double          clawOffset  = 0.0 ;                  // Servo mid position
-        final double    CLAW_SPEED  = 0.02 ;                 // sets rate to move servo
-
+        final double    CLAW_SPEED  = 0.02;                  // sets rate to move servo
+        double          colorArm    = 0.0 ;
+        final double    colorSpeed  = 0.02;
+        double[] powerCurve = {-1, -0.9, -0.6, -0.3, -0.2, -0.15, -0.1, -0.05, -0.01, 0, 0.01, 0.05, 0.1, 0.12, 0.15, 0.2, 0.3, 0.6, 0.9, 1};
         /*
          * Code to run ONCE when the driver hits INIT
          */
@@ -55,15 +57,15 @@ public class TwoDriverTest {
          */
         @Override
         public void loop() {
-            double left;
-            double right;
+            float left;
+            float right;
 
             // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
             left = -gamepad1.left_stick_y;
             right = -gamepad1.right_stick_y;
 
-            robot.leftDrive.setPower(left);
-            robot.rightDrive.setPower(right);
+            robot.leftDrive.setPower(powerCurve[Math.round(left*10)+10]);
+            robot.rightDrive.setPower(powerCurve[Math.round(right*10)+10]);
 
             // Use gamepad left & right Bumpers to open and close the claw
             if (gamepad2.right_bumper)
@@ -71,18 +73,19 @@ public class TwoDriverTest {
             else if (gamepad2.left_bumper)
                 clawOffset -= CLAW_SPEED;
 
+            if (gamepad2.y)
+                colorArm += colorSpeed;
+            else if (gamepad2.a)
+                colorArm -= colorSpeed;
+
             // Move both servos to new position.  Assume servos are mirror image of each other.
             clawOffset = Range.clip(clawOffset, -0.5, 0.5);
             robot.leftClaw.setPosition(robot.MID_SERVO + clawOffset);
             robot.rightClaw.setPosition(robot.MID_SERVO - clawOffset);
 
             // Use gamepad buttons to move the arm up (Y) and down (A)
-            if (gamepad2.y)
-                robot.leftArm.setPower(robot.ARM_UP_POWER);
-            else if (gamepad2.a)
-                robot.leftArm.setPower(robot.ARM_DOWN_POWER);
-            else
-                robot.leftArm.setPower(0.0);
+
+            robot.leftArm.setPower(robot.ARM_UP_POWER * gamepad2.left_stick_y);
 
             // Send telemetry message to signify robot running;
             telemetry.addData("claw",  "Offset = %.2f", clawOffset);
