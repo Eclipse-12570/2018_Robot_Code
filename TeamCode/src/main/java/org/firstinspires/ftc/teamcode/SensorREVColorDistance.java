@@ -112,7 +112,7 @@ public class SensorREVColorDistance extends LinearOpMode {
             Color.RGBToHSV((int) (sensorColor.red() * SCALE_FACTOR),
                     (int) (sensorColor.green() * SCALE_FACTOR),
                     (int) (sensorColor.blue() * SCALE_FACTOR),
-                    hsvValues);
+                    hsvValues;
 
             // send the info back to driver station using telemetry function.
             telemetry.addData("Distance (cm)",
@@ -135,11 +135,7 @@ public class SensorREVColorDistance extends LinearOpMode {
             telemetry.update();
         }
 
-        // Set the panel back to the default color
-        relativeLayout.post(new Runnable() {
-            public void run() {
-                relativeLayout.setBackgroundColor(Color.WHITE);
-            }
+
         });
     }
 }
