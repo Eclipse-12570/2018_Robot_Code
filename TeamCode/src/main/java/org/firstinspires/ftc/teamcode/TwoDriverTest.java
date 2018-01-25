@@ -24,6 +24,7 @@ public class TwoDriverTest {
         double          colorArm    = 0.0 ;
         final double    colorSpeed  = 0.02;
         double[] powerCurve = {-1, -0.9, -0.6, -0.3, -0.2, -0.15, -0.1, -0.05, -0.01, 0, 0.01, 0.05, 0.1, 0.12, 0.15, 0.2, 0.3, 0.6, 0.9, 1};
+
         /*
          * Code to run ONCE when the driver hits INIT
          */
@@ -66,6 +67,8 @@ public class TwoDriverTest {
 
             robot.leftDrive.setPower(powerCurve[Math.round(left*10)+10]);
             robot.rightDrive.setPower(powerCurve[Math.round(right*10)+10]);
+            telemetry.addData("Left Encoder", )
+
 
             // Use gamepad left & right Bumpers to open and close the claw
             if (gamepad2.right_bumper)
@@ -77,6 +80,14 @@ public class TwoDriverTest {
                 colorArm += colorSpeed;
             else if (gamepad2.a)
                 colorArm -= colorSpeed;
+
+            if(gamepad1.left_trigger > 0) {
+                robot.leftDrive.setPower(0.5);
+                robot.rightDrive.setPower(-0.5);
+            }
+            else if (gamepad1.right_trigger > 0){
+                robot.leftDrive.setPower(-0.5);
+                robot.rightDrive.setPower(0.5);
 
             // Move both servos to new position.  Assume servos are mirror image of each other.
             clawOffset = Range.clip(clawOffset, -0.5, 0.5);
