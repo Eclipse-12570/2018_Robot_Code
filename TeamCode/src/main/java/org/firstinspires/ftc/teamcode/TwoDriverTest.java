@@ -67,7 +67,6 @@ public class TwoDriverTest {
 
             robot.leftDrive.setPower(powerCurve[Math.round(left*10)+10]);
             robot.rightDrive.setPower(powerCurve[Math.round(right*10)+10]);
-            telemetry.addData("Left Encoder", )
 
 
             // Use gamepad left & right Bumpers to open and close the claw
@@ -82,16 +81,17 @@ public class TwoDriverTest {
                 colorArm -= colorSpeed;
 
             if(gamepad1.left_trigger > 0) {
-                robot.leftDrive.setPower(0.5);
-                robot.rightDrive.setPower(-0.5);
+                robot.leftDrive.setPower(1);
+                robot.rightDrive.setPower(-1);
             }
-            else if (gamepad1.right_trigger > 0){
-                robot.leftDrive.setPower(-0.5);
-                robot.rightDrive.setPower(0.5);
+            else if (gamepad1.right_trigger > 0) {
+                robot.leftDrive.setPower(-1);
+                robot.rightDrive.setPower(1);
+            }
 
             // Move both servos to new position.  Assume servos are mirror image of each other.
             clawOffset = Range.clip(clawOffset, -0.5, 0.5);
-            robot.leftClaw.setPosition(robot.MID_SERVO + clawOffset);
+            robot.leftClaw.setPosition(HardwarePushbot.MID_SERVO + clawOffset);
             robot.rightClaw.setPosition(robot.MID_SERVO - clawOffset);
 
             // Use gamepad buttons to move the arm up (Y) and down (A)
@@ -107,9 +107,10 @@ public class TwoDriverTest {
         /*
          * Code to run ONCE after the driver hits STOP
          */
-        @Override
-        public void stop() {
+            public void stop() {
+            }
         }
-    }
+
+
 
 }
