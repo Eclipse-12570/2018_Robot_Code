@@ -80,14 +80,7 @@ public class TwoDriverTest {
             else if (gamepad2.a)
                 colorArm -= colorSpeed;
 
-            if(gamepad1.left_trigger > 0) {
-                robot.leftDrive.setPower(1);
-                robot.rightDrive.setPower(-1);
-            }
-            else if (gamepad1.right_trigger > 0) {
-                robot.leftDrive.setPower(-1);
-                robot.rightDrive.setPower(1);
-            }
+
 
             // Move both servos to new position.  Assume servos are mirror image of each other.
             clawOffset = Range.clip(clawOffset, -0.5, 0.5);
