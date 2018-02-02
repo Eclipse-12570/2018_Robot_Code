@@ -33,7 +33,7 @@ public class TwoDriverTest {
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
          */
-            robot.init(hardwareMap);
+
 
             // Send telemetry message to signify robot waiting;
             telemetry.addData("Say", "Hello Driver");    //
@@ -58,6 +58,7 @@ public class TwoDriverTest {
          */
         @Override
         public void loop() {
+            robot.init(hardwareMap);
             float left;
             float right;
 
